@@ -2,19 +2,20 @@ package fr.silvain.AdventOfCode.jour;
 
 import fr.silvain.AdventOfCode.Jour;
 import fr.silvain.AdventOfCode.JourTest;
-import fr.silvain.AdventOfCode.jour.jour1.Jour2;
+import fr.silvain.AdventOfCode.jour.jour3.Jour3;
+import fr.silvain.AdventOfCode.jour.jour3.Position;
+import fr.silvain.AdventOfCode.jour.jour3.Segment;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Jour3Test extends JourTest {
-    private final Jour2 jour = new Jour2();
-    private final String RESULTAT_ATTENDU_PARTIE_1 = "8";
+    private final Jour3 jour = new Jour3();
+    private final String RESULTAT_ATTENDU_PARTIE_1 = "4361";
     private final List<String> RESULTAT_INCORRECTS_PARTIE_1 = List.of();
-    private final String RESULTAT_ATTENDU_PARTIE_2 = "2286";
+    private final String RESULTAT_ATTENDU_PARTIE_2 = "467835";
     private final List<String> RESULTAT_INCORRECTS_PARTIE_2 = List.of();
 
     @Override
@@ -25,43 +26,62 @@ public class Jour3Test extends JourTest {
     @Override
     @Test
     public void testPartie1() {
-        Map<String, Integer> cubeConfiguration = new HashMap<>();
-        cubeConfiguration.put("red", 12);
-        cubeConfiguration.put("green", 13);
-        cubeConfiguration.put("blue", 14);
-        jour.setCubeConfiguration(cubeConfiguration);
+
         this.partie1(RESULTAT_ATTENDU_PARTIE_1, RESULTAT_INCORRECTS_PARTIE_1);
     }
 
     @Override
     @Test
     public void testPartie2() {
-        Map<String, Integer> cubeConfiguration = new HashMap<>();
-        cubeConfiguration.put("red", 12);
-        cubeConfiguration.put("green", 13);
-        cubeConfiguration.put("blue", 14);
-        jour.setCubeConfiguration(cubeConfiguration);
         this.partie2(RESULTAT_ATTENDU_PARTIE_2, RESULTAT_INCORRECTS_PARTIE_2);
     }
 
     @Override
     @Test
     public void validatePartie1() {
+        Position end = jour.getEndPosition(new Position(4, 2), "..35..633.");
+        Assertions.assertEquals(4, end.getLine());
+        Assertions.assertEquals(3, end.getPosition());
+        end = jour.getEndPosition(new Position(4, 6), "..35..633.");
+        Assertions.assertEquals(4, end.getLine());
+        Assertions.assertEquals(8, end.getPosition());
+        end = jour.getEndPosition(new Position(4, 6), "..35..67");
+        Assertions.assertEquals(4, end.getLine());
+        Assertions.assertEquals(7, end.getPosition());
+
+        Pair<List<Position>, List<Segment>> segmentsSymbols = jour.getSegmentsAndSymbols(4, "..35..633.");
+        Assertions.assertEquals(0, segmentsSymbols.getLeft().size());
+        Assertions.assertEquals(2, segmentsSymbols.getRight().size());
+        segmentsSymbols = jour.getSegmentsAndSymbols(4, "...+..35..633.");
+        Assertions.assertEquals(1, segmentsSymbols.getLeft().size());
+        Assertions.assertEquals(2, segmentsSymbols.getRight().size());
+        Assertions.assertEquals(4, segmentsSymbols.getLeft().get(0).getLine());
+        Assertions.assertEquals(3, segmentsSymbols.getLeft().get(0).getPosition());
+
+
+        Segment segment = new Segment(new Position(0, 0), new Position(0, 2));
+        List<Position> symbols = List.of(new Position(1, 3));
+        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        symbols = List.of(new Position(1, 4));
+        Assertions.assertFalse(jour.hasSymbolsAdjcacent(segment, symbols));
+        symbols = List.of(new Position(1, 0));
+        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        symbols = List.of(new Position(2, 0));
+        Assertions.assertFalse(jour.hasSymbolsAdjcacent(segment, symbols));
+        symbols = List.of(new Position(0, 3));
+        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        segment = new Segment(new Position(0, 1), new Position(0, 3));
+        symbols = List.of(new Position(0, 0));
+        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        segment = new Segment(new Position(1, 1), new Position(1, 3));
+        symbols = List.of(new Position(0, 0));
+        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
 
     }
 
     @Override
     @Test
     public void validatePartie2() {
-        Map<String, Integer> cubeConfiguration = new HashMap<>();
-        cubeConfiguration.put("red", 12);
-        cubeConfiguration.put("green", 13);
-        cubeConfiguration.put("blue", 14);
-        jour.setCubeConfiguration(cubeConfiguration);
-        Assertions.assertEquals("48", jour.executePartie2(List.of("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green")));
-        Assertions.assertEquals("12", jour.executePartie2(List.of("Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue")));
-        Assertions.assertEquals("1560", jour.executePartie2(List.of("Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red")));
-        Assertions.assertEquals("630", jour.executePartie2(List.of("Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red")));
-        Assertions.assertEquals("36", jour.executePartie2(List.of("Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green")));
+
     }
 }
