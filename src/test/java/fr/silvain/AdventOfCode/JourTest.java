@@ -1,5 +1,7 @@
 package fr.silvain.AdventOfCode;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -11,8 +13,20 @@ import static org.junit.Assert.assertFalse;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @RunWith(JUnit4.class)
-public abstract class JourTest {
-    protected abstract Jour getJour();
+public abstract class JourTest<T extends Jour> {
+
+    private T jour;
+
+    protected T getJour(){
+        return jour;
+    };
+
+    protected abstract T instanceNewJour();
+
+    @Before
+    public void setUp() {
+        jour = instanceNewJour();
+    }
 
     protected void partie1(String resultatAttenduPartie1, List<String> resultatsIncorrectsPartie2) {
         System.out.printf("========================== JOUR %s ==========================\n", getJour().getDay());

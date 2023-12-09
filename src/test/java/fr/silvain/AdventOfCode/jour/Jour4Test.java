@@ -7,16 +7,15 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class Jour4Test extends JourTest {
-    private final Jour4 jour = new Jour4();
+public class Jour4Test extends JourTest<Jour4> {
     private final String RESULTAT_ATTENDU_PARTIE_1 = "13";
     private final List<String> RESULTAT_INCORRECTS_PARTIE_1 = List.of();
     private final String RESULTAT_ATTENDU_PARTIE_2 = "30";
     private final List<String> RESULTAT_INCORRECTS_PARTIE_2 = List.of();
 
     @Override
-    protected Jour getJour() {
-        return jour;
+    protected Jour4 instanceNewJour() {
+        return new Jour4();
     }
 
     @Override

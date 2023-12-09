@@ -11,16 +11,16 @@ import org.junit.jupiter.api.Assertions;
 
 import java.util.List;
 
-public class Jour3Test extends JourTest {
-    private final Jour3 jour = new Jour3();
+public class Jour3Test extends JourTest<Jour3> {
     private final String RESULTAT_ATTENDU_PARTIE_1 = "4361";
     private final List<String> RESULTAT_INCORRECTS_PARTIE_1 = List.of();
     private final String RESULTAT_ATTENDU_PARTIE_2 = "467835";
     private final List<String> RESULTAT_INCORRECTS_PARTIE_2 = List.of();
 
+
     @Override
-    protected Jour getJour() {
-        return jour;
+    protected Jour3 instanceNewJour() {
+        return new Jour3();
     }
 
     @Override
@@ -39,20 +39,20 @@ public class Jour3Test extends JourTest {
     @Override
     @Test
     public void validatePartie1() {
-        Position end = jour.getEndPosition(new Position(4, 2), "..35..633.");
+        Position end = getJour().getEndPosition(new Position(4, 2), "..35..633.");
         Assertions.assertEquals(4, end.getLine());
         Assertions.assertEquals(3, end.getPosition());
-        end = jour.getEndPosition(new Position(4, 6), "..35..633.");
+        end = getJour().getEndPosition(new Position(4, 6), "..35..633.");
         Assertions.assertEquals(4, end.getLine());
         Assertions.assertEquals(8, end.getPosition());
-        end = jour.getEndPosition(new Position(4, 6), "..35..67");
+        end = getJour().getEndPosition(new Position(4, 6), "..35..67");
         Assertions.assertEquals(4, end.getLine());
         Assertions.assertEquals(7, end.getPosition());
 
-        Pair<List<Position>, List<Segment>> segmentsSymbols = jour.getSegmentsAndSymbols(4, "..35..633.");
+        Pair<List<Position>, List<Segment>> segmentsSymbols = getJour().getSegmentsAndSymbols(4, "..35..633.");
         Assertions.assertEquals(0, segmentsSymbols.getLeft().size());
         Assertions.assertEquals(2, segmentsSymbols.getRight().size());
-        segmentsSymbols = jour.getSegmentsAndSymbols(4, "...+..35..633.");
+        segmentsSymbols = getJour().getSegmentsAndSymbols(4, "...+..35..633.");
         Assertions.assertEquals(1, segmentsSymbols.getLeft().size());
         Assertions.assertEquals(2, segmentsSymbols.getRight().size());
         Assertions.assertEquals(4, segmentsSymbols.getLeft().get(0).getLine());
@@ -61,21 +61,21 @@ public class Jour3Test extends JourTest {
 
         Segment segment = new Segment(new Position(0, 0), new Position(0, 2));
         List<Position> symbols = List.of(new Position(1, 3));
-        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertTrue(getJour().hasSymbolsAdjcacent(segment, symbols));
         symbols = List.of(new Position(1, 4));
-        Assertions.assertFalse(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertFalse(getJour().hasSymbolsAdjcacent(segment, symbols));
         symbols = List.of(new Position(1, 0));
-        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertTrue(getJour().hasSymbolsAdjcacent(segment, symbols));
         symbols = List.of(new Position(2, 0));
-        Assertions.assertFalse(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertFalse(getJour().hasSymbolsAdjcacent(segment, symbols));
         symbols = List.of(new Position(0, 3));
-        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertTrue(getJour().hasSymbolsAdjcacent(segment, symbols));
         segment = new Segment(new Position(0, 1), new Position(0, 3));
         symbols = List.of(new Position(0, 0));
-        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertTrue(getJour().hasSymbolsAdjcacent(segment, symbols));
         segment = new Segment(new Position(1, 1), new Position(1, 3));
         symbols = List.of(new Position(0, 0));
-        Assertions.assertTrue(jour.hasSymbolsAdjcacent(segment, symbols));
+        Assertions.assertTrue(getJour().hasSymbolsAdjcacent(segment, symbols));
 
     }
 
