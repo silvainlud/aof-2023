@@ -15,7 +15,7 @@ public abstract class JourTest {
     protected abstract Jour getJour();
 
     protected void partie1(String resultatAttenduPartie1, List<String> resultatsIncorrectsPartie2) {
-        System.out.printf("========================== JOUR %s ==========================", getJour().getDay());
+        System.out.printf("========================== JOUR %s ==========================\n", getJour().getDay());
         String resultatObtenuEx = getJour().part1(true);
         System.out.printf("--------------------------\nRésultat partie 1 exemple: \n%s\n", resultatObtenuEx);
         assertEquals("Le résultat est incorrect", resultatAttenduPartie1, resultatObtenuEx);
@@ -26,7 +26,7 @@ public abstract class JourTest {
     }
 
     protected void partie2(String resultatAttenduPartie1, List<String> resultatsIncorrectsPartie2) {
-        System.out.printf("========================== JOUR %s ==========================", getJour().getDay());
+        System.out.printf("========================== JOUR %s ==========================\n", getJour().getDay());
         String resultatObtenuEx = getJour().part2(true);
         System.out.printf("--------------------------\nRésultat partie 2 exemple: \n%s\n", resultatObtenuEx);
         assertEquals("Le résultat est incorrect", resultatAttenduPartie1, resultatObtenuEx);
